@@ -10,14 +10,18 @@ Flexible forum application for django 1.5+
 
 1. Add "arena" to your INSTALLED_APPS setting like this:
 
+    ```
     INSTALLED_APPS = (
         ...
         'arena',
     )
+    ```
 
 2. Include the arena URLconf in your project urls.py like this:
 
+    ```
     url(r'^forum/', include('arena.urls')),
+    ```
 
 3. Run `python manage.py syncdb` to create the arena models. arena also have
    south migration files; so if you're using it, you can instead run
