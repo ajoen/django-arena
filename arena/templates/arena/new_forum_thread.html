@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n static sekizai_tags %}
+
+{% block content %}
+
+    {% addtoblock 'css' %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/arena.css' %}">
+    {% endaddtoblock %}
+
+    <section>
+        <h2>{% trans "New Thread" %}</h2>
+        {{ form.errors }}
+        <form action="{% url 'arena:new_forum_thread' forum_slug=forum.slug %}" method="post">
+            {% csrf_token %}
+            <p>
+                <input type="text" placeholder="{% trans "Title" %}" maxlength="127" name="title" class="arena_input">
+            </p>
+            <p>
+                <textarea name="content" placeholder="{% trans "Content" %}" class="arena_textarea"></textarea>
+            </p>
+            <p>
+                <input type="hidden" name="forum" value="{{ forum.id }}">
+                <input type="submit" value="{% trans "Create Thread" %}">
+            </p>
+        </form>
+    </section>
+
+{% endblock %}

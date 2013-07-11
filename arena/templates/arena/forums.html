@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load i18n arena static sekizai_tags %}
+
+{% block content %}
+
+    {% addtoblock 'css' %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/arena.css' %}">
+    {% endaddtoblock %}
+
+    <section id="arena_tableWrapper">
+
+        <h2>{% trans "FORUM" %}</h2>
+        <table class="arena_table">
+            <thead>
+                <tr>
+                    <th>{% trans "Forum" %}</th>
+                    <th>{% trans "Topics" %}</th>
+                    <th>{% trans "Posts" %}</th>
+                    <th>{% trans "Latest post" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!-- FORUM_CATEGORY -->
+                {% for forum_category in forum_categories %}
+                    <tr class="arena_forumHeader">
+                        <th colspan="4">
+                            <h3>{{ forum_category }}</h3>
+                        </th>
+                    </tr>
+
+                    <!-- FORUM -->
+                    {% for forum in forum_category.forums.all %}
+                        {% forum_has_new_forum_posts forum=forum user=request.user as hasNewForumPost %}
+                        <tr{% if hasNewForumPost %} class="arena_forumHasNewPosts"{% endif %}>
+                            <td>
+                                <a href="{% url 'arena:forum' forum_slug=forum.slug %}">
+                                    <span class="arena_forumName">{{ forum.name }}</span>
+                                </a>
+                                <span class="arena_forumDescription">{{ forum.description }}</span>
+                            </td>
+                            <td>{{ forum.forum_threads.count }}</td>
+                            <td>{{ forum.get_forum_posts_count }}</td>
+                            <td>{{ forum.get_last_forum_post.get_post_time }}</td>
+                        </tr>
+                    {% endfor %}
+                    <!-- /FORUM -->
+
+                {% endfor %}
+                <!-- /FORUM_CATEGORY -->
+
+            </tbody>
+        </table>
+
+    </section>
+
+{% endblock %}

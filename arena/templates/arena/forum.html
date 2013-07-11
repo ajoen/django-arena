@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load i18n arena static sekizai_tags %}
+
+{% block content %}
+
+    {% addtoblock 'css' %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/arena.css' %}">
+    {% endaddtoblock %}
+
+    <section class="arena_tableWrapper">
+
+        <header>
+            <nav class="arena_breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'arena:forums' %}">{% trans "Forums" %}</a></li>
+                </ul>
+            </nav>
+            <nav class="arena_forumThreadButtons">
+                <ul>
+                    <li><a href="{% url 'arena:new_forum_thread' forum_slug=forum.slug %}">{% trans "New Thread" %}</a></li>
+                </ul>
+            </nav>
+            <h2>{{ forum.name }}</h2>
+        </header>
+
+        <table class="arena_table">
+            <thead>
+                <tr>
+                    <th>{% trans "Topics" %}</th>
+                    <th>{% trans "Posts" %}</th>
+                    <th>{% trans "Views" %}</th>
+                    <th>{% trans "Latest post" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!-- FORUM_THREADS -->
+                {% for forum_thread in forum.forum_threads.all %}
+                    <tr>
+                        {% forum_thread_has_new_forum_posts forum_thread=forum_thread user=request.user as hasNewForumPost %}
+                        <td>
+                            <a href="{% url 'arena:forum_thread' forum_slug=forum_thread.forum.slug forum_thread_slug=forum_thread.slug %}">
+                                {{ forum_thread.title }}
+                            </a>
+                        </td>
+                        <td>{{ forum_thread.get_forum_posts_count }}</td>
+                        <td>{{ forum_thread.get_views_count }}</td>
+                        <td>{{ forum_thread.last_post_date }}</td>
+                    </tr>
+                {% endfor %}
+                <!-- /FORUM_THREADS -->
+
+            </tbody>
+        </table>
+
+    </section>
+
+{% endblock %}

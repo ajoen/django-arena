@@ -1,0 +1,29 @@
+.arena_tableWrapper{margin:0 auto;padding:10px;width:95%}
+.arena_tableWrapper header{display:block;overflow:hidden}
+    .arena_table{border:0;width:100%}
+    .arena_table thead{background-color:#eeeeee}
+    .arena_table tbody tr.arena_forumHeader{background-color:#eeeeee;text-align:left}
+    .arena_table tbody tr th,
+    .arena_table tbody tr td{padding:5px}
+    .arena_table tbody tr td:nth-child(1){width:50%}
+    .arena_table tbody tr td:nth-child(2){text-align:center;width:10%}
+    .arena_table tbody tr td:nth-child(3){text-align:center;width:10%}
+    .arena_table tbody tr td:nth-child(4){text-align:center;width:30%}
+    .arena_table.arena_forumThread tbody tr td:nth-child(1){width:10%}
+    .arena_table.arena_forumThread tbody tr td:nth-child(2){text-align:left;width:90%}
+    .arena_table.arena_forumThread tbody tr td:nth-child(2) date{float:right}
+.arena_forumName,
+.arena_forumDescription{display:block}
+.arena_forumDescription{font-size:90%}
+.arena_breadcrumbs{float:left}
+.arena_breadcrumbs ul li:after{content:"»";margin:0 5px}
+.arena_breadcrumbs ul li:last-child:after{content:""}
+.arena_forumThreadButtons{float:right}
+.arena_breadcrumbs ul,
+.arena_forumThreadButtons ul{float:left;list-style:none;margin:0;overflow:hidden;padding:0}
+.arena_breadcrumbs ul li,
+.arena_forumThreadButtons ul li{float:left}
+.ajoen_newForumThreadReply{float:right;text-align:right;border-top:1px solid;width:100%;padding-top:10px}
+.arena_input{display:block;width:400px;outline:0}
+.arena_textarea{display:block;width:400px;height:150px;outline:0}
+.ajoen_newForumThreadReply .arena_textarea{float:right}

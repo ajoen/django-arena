@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load i18n arena static sekizai_tags %}
+
+{% block content %}
+
+    {% addtoblock 'css' %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/arena.css' %}">
+    {% endaddtoblock %}
+
+    <section class="arena_tableWrapper">
+
+        <header>
+            <nav class="arena_breadcrumbs">
+                <ul>
+                    <li>
+                        <a href="{% url 'arena:forums' %}">{% trans "Forums" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'arena:forum' forum_slug=forum_thread.forum.slug %}">
+                            {{ forum_thread.forum.name }}
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="arena_forumThreadButtons">
+                <ul>
+                    <li>
+                        <a href="{% url 'arena:new_forum_thread' forum_slug=forum_thread.forum.slug %}">
+                            {% trans "New Thread" %}
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <h2>{{ forum_thread.title }}</h2>
+        </header>
+
+        <table class="arena_table arena_forumThread">
+            <thead>
+                <tr>
+                    <th>{% trans "Author" %}</th>
+                    <th>{% trans "Post" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for forum_post in forum_posts %}
+                <tr id="post-{{ forum_post.id }}">
+                    <td>{{ forum_post.sender }}</td>
+                    <td>
+                        <date>{{ forum_post.get_post_time }}</date>
+                        <div>
+                            {{ forum_post.content }}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+        <!-- Reply -->
+        <section class="ajoen_newForumThreadReply">
+            {{ form.errors }}
+            <form action="{% url 'arena:forum_thread' forum_slug=forum_thread.forum.slug forum_thread_slug=forum_thread.slug %}" method="post">{% csrf_token %}
+                <textarea name="content" class="arena_textarea"></textarea>
+                <input type="hidden" name="forum_thread" value="{{ forum_thread.id }}">
+                <input type="submit" value="{% trans 'Reply' %}">
+            </form>
+        </div>
+
+    </section>
+
+{% endblock %}
