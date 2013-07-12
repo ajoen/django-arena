@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.conf import settings
-from django.db import models
+from django.db import models, IntegrityError
 from django.utils.translation import ugettext_lazy as _
 from uuslug import slugify
 
@@ -118,8 +118,13 @@ class ForumThread(models.Model):
         verbose_name_plural = _('forum threads')
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(ForumThread, self).save()
+        if self.pk is None:
+            self.slug = slugify(self.title)
+        try:
+            super(ForumThread, self).save()
+        except IntegrityError:
+            self.slug += '-' + str(ForumThread.objects.filter(slug__startswith=self.slug).count())
+            super(ForumThread, self).save()
 
     def get_forum_posts(self, user):
         # flag the thread as read

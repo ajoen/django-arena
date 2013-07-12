@@ -83,7 +83,7 @@ def new_forum_thread(request, forum_slug):
         form = ForumThreadForm(add_client_data(request, add_user_to_post_data(request, 'creator')),)
         if form.is_valid():
             forum_thread = form.save()
-            return redirect('arena:forum_thread', forum_slug=forum_slug, forum_thread_slug=forum_thread.get_slug())
+            return redirect('arena:forum_thread', forum_slug=forum_slug, forum_thread_slug=forum_thread.slug)
     return render_to_response('arena/new_forum_thread.html', {
         'forum': forum,
         'form': form,
