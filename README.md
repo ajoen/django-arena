@@ -1,6 +1,6 @@
 # django-arena
 
-Flexible forum application for django 1.5+
+Flexible/simple forum application for django 1.5+. Ideal for implementing forums within a social network.
 
 ## Dependencies
 
